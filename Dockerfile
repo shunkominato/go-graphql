@@ -2,7 +2,7 @@ FROM golang:1.20.0-alpine
 
 RUN apk update && apk add git && apk add alpine-sdk
 
-ENV APP_ROOT /go/src/
+ENV APP_ROOT /go/src/app
 
 RUN mkdir $APP_ROOT
 

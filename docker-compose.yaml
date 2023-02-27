@@ -11,7 +11,7 @@ services:
     # depends_on: #依存関係
     #   - db
     volumes: #マウントディレクトリ
-      - .:/go/src/
+      - .:/go/src/app
       # - go-data:/go
 #   db: #サービス名
 #     image: postgres:latest #ビルドに使用するimageファイル
