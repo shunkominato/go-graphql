@@ -12,6 +12,8 @@ services:
     #   - db
     volumes: #マウントディレクトリ
       - .:/go/src/app
+    networks:
+      - app-net
       # - go-data:/go
 #   db: #サービス名
 #     image: postgres:latest #ビルドに使用するimageファイル
@@ -28,3 +30,7 @@ services:
 
 # volumes:
 #   go-data:
+
+networks:
+  app-net:
+    external: true

@@ -1,6 +1,6 @@
 FROM golang:1.20.0-alpine
 
-RUN apk update && apk add git && apk add alpine-sdk
+RUN apk update && apk add git && apk add alpine-sdk && apk add postgresql-client
 
 ENV APP_ROOT /go/src/app
 
