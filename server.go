@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"log"
 
-	"server/ent"
+	// "server/ent/model"
 
 	"entgo.io/ent/entc/integration/ent"
 	_ "github.com/lib/pq"
