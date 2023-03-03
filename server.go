@@ -5,16 +5,11 @@ import (
 	"fmt"
 	"log"
 
-	// "server/ent"
+	"server/ent"
 
 	"entgo.io/ent/entc/integration/ent"
 	_ "github.com/lib/pq"
 )
-
-type Todo struct {
-  ID        uint      // カラム名は`id`
-  Todo      string    // カラム名は`name`
-}
 
 func main() {
 	// opts := []ent.Option{
@@ -26,11 +21,11 @@ func main() {
 	// 	log.Fatalf("running ent codegen: %v", err)
 	// }
 	client, err := ent.Open("postgres", fmt.Sprintf("host=%s port=%s user=%s dbname=%s password=%s sslmode=disable",
-		"rails_api-db-1", "5432", "postgres", "rails_sample", "postgres", opts...))
+		"rails_api-db-1", "5432", "postgres", "rails_sample", "postgres"))
 
 		log.Print()
 		log.Print(err)
-		aa, er := client.Task.Query().All(context.Background())
+		aa, er := client..Query().All(context.Background())
     log.Print(aa)
     log.Print(er)
 	// // e := echo.New()
