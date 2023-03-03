@@ -25,7 +25,7 @@ func main() {
 
 		log.Print()
 		log.Print(err)
-		aa, er := client..Query().All(context.Background())
+		aa, er := client.Todo.Query().All(context.Background())
     log.Print(aa)
     log.Print(er)
 	// // e := echo.New()
