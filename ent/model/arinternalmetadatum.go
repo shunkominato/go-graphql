@@ -4,11 +4,11 @@ package model
 
 import (
 	"fmt"
-	"server/ent/model/arinternalmetadatum"
 	"strings"
 	"time"
 
 	"entgo.io/ent/dialect/sql"
+	"story.com/story/app/ent/model/arinternalmetadatum"
 )
 
 // ArInternalMetadatum is the model entity for the ArInternalMetadatum schema.

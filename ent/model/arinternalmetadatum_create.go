@@ -6,11 +6,11 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"server/ent/model/arinternalmetadatum"
 	"time"
 
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"story.com/story/app/ent/model/arinternalmetadatum"
 )
 
 // ArInternalMetadatumCreate is the builder for creating a ArInternalMetadatum entity.

@@ -3,9 +3,8 @@
 package schemamigration
 
 import (
-	"server/ent/model/predicate"
-
 	"entgo.io/ent/dialect/sql"
+	"story.com/story/app/ent/model/predicate"
 )
 
 // ID filters vertices based on their ID field.

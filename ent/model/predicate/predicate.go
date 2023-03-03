@@ -9,12 +9,6 @@ import (
 // ArInternalMetadatum is the predicate function for arinternalmetadatum builders.
 type ArInternalMetadatum func(*sql.Selector)
 
-// Company is the predicate function for company builders.
-type Company func(*sql.Selector)
-
-// Example is the predicate function for example builders.
-type Example func(*sql.Selector)
-
 // SchemaMigration is the predicate function for schemamigration builders.
 type SchemaMigration func(*sql.Selector)
 

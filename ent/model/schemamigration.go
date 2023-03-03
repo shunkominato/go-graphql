@@ -4,10 +4,10 @@ package model
 
 import (
 	"fmt"
-	"server/ent/model/schemamigration"
 	"strings"
 
 	"entgo.io/ent/dialect/sql"
+	"story.com/story/app/ent/model/schemamigration"
 )
 
 // SchemaMigration is the model entity for the SchemaMigration schema.

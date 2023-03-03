@@ -4,12 +4,12 @@ package model
 
 import (
 	"context"
-	"server/ent/model/predicate"
-	"server/ent/model/schemamigration"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"story.com/story/app/ent/model/predicate"
+	"story.com/story/app/ent/model/schemamigration"
 )
 
 // SchemaMigrationDelete is the builder for deleting a SchemaMigration entity.

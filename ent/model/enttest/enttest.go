@@ -4,13 +4,13 @@ package enttest
 
 import (
 	"context"
-	"server/ent/model"
-	// required by schema hooks.
-	_ "server/ent/model/runtime"
 
-	"server/ent/model/migrate"
+	"story.com/story/app/ent/model"
+	// required by schema hooks.
+	_ "story.com/story/app/ent/model/runtime"
 
 	"entgo.io/ent/dialect/sql/schema"
+	"story.com/story/app/ent/model/migrate"
 )
 
 type (

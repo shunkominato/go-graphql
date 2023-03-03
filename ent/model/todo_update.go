@@ -6,15 +6,15 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"server/ent/model/predicate"
-	"server/ent/model/todo"
-	"server/ent/model/todostatus"
-	"server/ent/model/user"
 	"time"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"story.com/story/app/ent/model/predicate"
+	"story.com/story/app/ent/model/todo"
+	"story.com/story/app/ent/model/todostatus"
+	"story.com/story/app/ent/model/user"
 )
 
 // TodoUpdate is the builder for updating Todo entities.
@@ -157,7 +157,7 @@ func (tu *TodoUpdate) ExecX(ctx context.Context) {
 }
 
 func (tu *TodoUpdate) sqlSave(ctx context.Context) (n int, err error) {
-	_spec := sqlgraph.NewUpdateSpec(todo.Table, todo.Columns, sqlgraph.NewFieldSpec(todo.FieldID, field.TypeUint))
+	_spec := sqlgraph.NewUpdateSpec(todo.Table, todo.Columns, sqlgraph.NewFieldSpec(todo.FieldID, field.TypeInt))
 	if ps := tu.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
@@ -404,7 +404,7 @@ func (tuo *TodoUpdateOne) ExecX(ctx context.Context) {
 }
 
 func (tuo *TodoUpdateOne) sqlSave(ctx context.Context) (_node *Todo, err error) {
-	_spec := sqlgraph.NewUpdateSpec(todo.Table, todo.Columns, sqlgraph.NewFieldSpec(todo.FieldID, field.TypeUint))
+	_spec := sqlgraph.NewUpdateSpec(todo.Table, todo.Columns, sqlgraph.NewFieldSpec(todo.FieldID, field.TypeInt))
 	id, ok := tuo.mutation.ID()
 	if !ok {
 		return nil, &ValidationError{Name: "id", err: errors.New(`model: missing "Todo.id" for update`)}

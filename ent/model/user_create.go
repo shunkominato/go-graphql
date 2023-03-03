@@ -6,12 +6,12 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"server/ent/model/todo"
-	"server/ent/model/user"
 	"time"
 
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"story.com/story/app/ent/model/todo"
+	"story.com/story/app/ent/model/user"
 )
 
 // UserCreate is the builder for creating a User entity.
@@ -232,14 +232,14 @@ func (uc *UserCreate) SetID(i int) *UserCreate {
 }
 
 // AddTodoIDs adds the "todos" edge to the Todo entity by IDs.
-func (uc *UserCreate) AddTodoIDs(ids ...uint) *UserCreate {
+func (uc *UserCreate) AddTodoIDs(ids ...int) *UserCreate {
 	uc.mutation.AddTodoIDs(ids...)
 	return uc
 }
 
 // AddTodos adds the "todos" edges to the Todo entity.
 func (uc *UserCreate) AddTodos(t ...*Todo) *UserCreate {
-	ids := make([]uint, len(t))
+	ids := make([]int, len(t))
 	for i := range t {
 		ids[i] = t[i].ID
 	}
@@ -408,7 +408,7 @@ func (uc *UserCreate) createSpec() (*User, *sqlgraph.CreateSpec) {
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeUint,
+					Type:   field.TypeInt,
 					Column: todo.FieldID,
 				},
 			},

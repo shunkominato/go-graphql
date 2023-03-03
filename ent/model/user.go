@@ -5,11 +5,11 @@ package model
 import (
 	"encoding/json"
 	"fmt"
-	"server/ent/model/user"
 	"strings"
 	"time"
 
 	"entgo.io/ent/dialect/sql"
+	"story.com/story/app/ent/model/user"
 )
 
 // User is the model entity for the User schema.

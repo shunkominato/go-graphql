@@ -7,17 +7,15 @@ import (
 	"errors"
 	"fmt"
 	"reflect"
-	"server/ent/model/arinternalmetadatum"
-	"server/ent/model/company"
-	"server/ent/model/example"
-	"server/ent/model/schemamigration"
-	"server/ent/model/todo"
-	"server/ent/model/todostatus"
-	"server/ent/model/user"
 
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
+	"story.com/story/app/ent/model/arinternalmetadatum"
+	"story.com/story/app/ent/model/schemamigration"
+	"story.com/story/app/ent/model/todo"
+	"story.com/story/app/ent/model/todostatus"
+	"story.com/story/app/ent/model/user"
 )
 
 // ent aliases to avoid import conflicts in user's code.
@@ -72,8 +70,6 @@ type OrderFunc func(*sql.Selector)
 func columnChecker(table string) func(string) error {
 	checks := map[string]func(string) bool{
 		arinternalmetadatum.Table: arinternalmetadatum.ValidColumn,
-		company.Table:             company.ValidColumn,
-		example.Table:             example.ValidColumn,
 		schemamigration.Table:     schemamigration.ValidColumn,
 		todo.Table:                todo.ValidColumn,
 		todostatus.Table:          todostatus.ValidColumn,

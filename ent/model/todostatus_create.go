@@ -6,12 +6,12 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"server/ent/model/todo"
-	"server/ent/model/todostatus"
 	"time"
 
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"story.com/story/app/ent/model/todo"
+	"story.com/story/app/ent/model/todostatus"
 )
 
 // TodoStatusCreate is the builder for creating a TodoStatus entity.
@@ -46,14 +46,14 @@ func (tsc *TodoStatusCreate) SetID(i int) *TodoStatusCreate {
 }
 
 // AddTodoIDs adds the "todos" edge to the Todo entity by IDs.
-func (tsc *TodoStatusCreate) AddTodoIDs(ids ...uint) *TodoStatusCreate {
+func (tsc *TodoStatusCreate) AddTodoIDs(ids ...int) *TodoStatusCreate {
 	tsc.mutation.AddTodoIDs(ids...)
 	return tsc
 }
 
 // AddTodos adds the "todos" edges to the Todo entity.
 func (tsc *TodoStatusCreate) AddTodos(t ...*Todo) *TodoStatusCreate {
-	ids := make([]uint, len(t))
+	ids := make([]int, len(t))
 	for i := range t {
 		ids[i] = t[i].ID
 	}
@@ -156,7 +156,7 @@ func (tsc *TodoStatusCreate) createSpec() (*TodoStatus, *sqlgraph.CreateSpec) {
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeUint,
+					Type:   field.TypeInt,
 					Column: todo.FieldID,
 				},
 			},

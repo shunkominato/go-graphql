@@ -14,10 +14,6 @@ type Tx struct {
 	config
 	// ArInternalMetadatum is the client for interacting with the ArInternalMetadatum builders.
 	ArInternalMetadatum *ArInternalMetadatumClient
-	// Company is the client for interacting with the Company builders.
-	Company *CompanyClient
-	// Example is the client for interacting with the Example builders.
-	Example *ExampleClient
 	// SchemaMigration is the client for interacting with the SchemaMigration builders.
 	SchemaMigration *SchemaMigrationClient
 	// Todo is the client for interacting with the Todo builders.
@@ -158,8 +154,6 @@ func (tx *Tx) Client() *Client {
 
 func (tx *Tx) init() {
 	tx.ArInternalMetadatum = NewArInternalMetadatumClient(tx.config)
-	tx.Company = NewCompanyClient(tx.config)
-	tx.Example = NewExampleClient(tx.config)
 	tx.SchemaMigration = NewSchemaMigrationClient(tx.config)
 	tx.Todo = NewTodoClient(tx.config)
 	tx.TodoStatus = NewTodoStatusClient(tx.config)

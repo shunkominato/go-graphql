@@ -6,15 +6,15 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"server/ent/model/predicate"
-	"server/ent/model/todo"
-	"server/ent/model/user"
 	"time"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/dialect/sql/sqljson"
 	"entgo.io/ent/schema/field"
+	"story.com/story/app/ent/model/predicate"
+	"story.com/story/app/ent/model/todo"
+	"story.com/story/app/ent/model/user"
 )
 
 // UserUpdate is the builder for updating User entities.
@@ -319,14 +319,14 @@ func (uu *UserUpdate) SetUpdatedAt(t time.Time) *UserUpdate {
 }
 
 // AddTodoIDs adds the "todos" edge to the Todo entity by IDs.
-func (uu *UserUpdate) AddTodoIDs(ids ...uint) *UserUpdate {
+func (uu *UserUpdate) AddTodoIDs(ids ...int) *UserUpdate {
 	uu.mutation.AddTodoIDs(ids...)
 	return uu
 }
 
 // AddTodos adds the "todos" edges to the Todo entity.
 func (uu *UserUpdate) AddTodos(t ...*Todo) *UserUpdate {
-	ids := make([]uint, len(t))
+	ids := make([]int, len(t))
 	for i := range t {
 		ids[i] = t[i].ID
 	}
@@ -345,14 +345,14 @@ func (uu *UserUpdate) ClearTodos() *UserUpdate {
 }
 
 // RemoveTodoIDs removes the "todos" edge to Todo entities by IDs.
-func (uu *UserUpdate) RemoveTodoIDs(ids ...uint) *UserUpdate {
+func (uu *UserUpdate) RemoveTodoIDs(ids ...int) *UserUpdate {
 	uu.mutation.RemoveTodoIDs(ids...)
 	return uu
 }
 
 // RemoveTodos removes "todos" edges to Todo entities.
 func (uu *UserUpdate) RemoveTodos(t ...*Todo) *UserUpdate {
-	ids := make([]uint, len(t))
+	ids := make([]int, len(t))
 	for i := range t {
 		ids[i] = t[i].ID
 	}
@@ -502,7 +502,7 @@ func (uu *UserUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeUint,
+					Type:   field.TypeInt,
 					Column: todo.FieldID,
 				},
 			},
@@ -518,7 +518,7 @@ func (uu *UserUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeUint,
+					Type:   field.TypeInt,
 					Column: todo.FieldID,
 				},
 			},
@@ -537,7 +537,7 @@ func (uu *UserUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeUint,
+					Type:   field.TypeInt,
 					Column: todo.FieldID,
 				},
 			},
@@ -856,14 +856,14 @@ func (uuo *UserUpdateOne) SetUpdatedAt(t time.Time) *UserUpdateOne {
 }
 
 // AddTodoIDs adds the "todos" edge to the Todo entity by IDs.
-func (uuo *UserUpdateOne) AddTodoIDs(ids ...uint) *UserUpdateOne {
+func (uuo *UserUpdateOne) AddTodoIDs(ids ...int) *UserUpdateOne {
 	uuo.mutation.AddTodoIDs(ids...)
 	return uuo
 }
 
 // AddTodos adds the "todos" edges to the Todo entity.
 func (uuo *UserUpdateOne) AddTodos(t ...*Todo) *UserUpdateOne {
-	ids := make([]uint, len(t))
+	ids := make([]int, len(t))
 	for i := range t {
 		ids[i] = t[i].ID
 	}
@@ -882,14 +882,14 @@ func (uuo *UserUpdateOne) ClearTodos() *UserUpdateOne {
 }
 
 // RemoveTodoIDs removes the "todos" edge to Todo entities by IDs.
-func (uuo *UserUpdateOne) RemoveTodoIDs(ids ...uint) *UserUpdateOne {
+func (uuo *UserUpdateOne) RemoveTodoIDs(ids ...int) *UserUpdateOne {
 	uuo.mutation.RemoveTodoIDs(ids...)
 	return uuo
 }
 
 // RemoveTodos removes "todos" edges to Todo entities.
 func (uuo *UserUpdateOne) RemoveTodos(t ...*Todo) *UserUpdateOne {
-	ids := make([]uint, len(t))
+	ids := make([]int, len(t))
 	for i := range t {
 		ids[i] = t[i].ID
 	}
@@ -1069,7 +1069,7 @@ func (uuo *UserUpdateOne) sqlSave(ctx context.Context) (_node *User, err error) 
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeUint,
+					Type:   field.TypeInt,
 					Column: todo.FieldID,
 				},
 			},
@@ -1085,7 +1085,7 @@ func (uuo *UserUpdateOne) sqlSave(ctx context.Context) (_node *User, err error) 
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeUint,
+					Type:   field.TypeInt,
 					Column: todo.FieldID,
 				},
 			},
@@ -1104,7 +1104,7 @@ func (uuo *UserUpdateOne) sqlSave(ctx context.Context) (_node *User, err error) 
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeUint,
+					Type:   field.TypeInt,
 					Column: todo.FieldID,
 				},
 			},

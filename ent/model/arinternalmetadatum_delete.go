@@ -4,12 +4,12 @@ package model
 
 import (
 	"context"
-	"server/ent/model/arinternalmetadatum"
-	"server/ent/model/predicate"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"story.com/story/app/ent/model/arinternalmetadatum"
+	"story.com/story/app/ent/model/predicate"
 )
 
 // ArInternalMetadatumDelete is the builder for deleting a ArInternalMetadatum entity.

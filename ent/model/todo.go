@@ -4,20 +4,20 @@ package model
 
 import (
 	"fmt"
-	"server/ent/model/todo"
-	"server/ent/model/todostatus"
-	"server/ent/model/user"
 	"strings"
 	"time"
 
 	"entgo.io/ent/dialect/sql"
+	"story.com/story/app/ent/model/todo"
+	"story.com/story/app/ent/model/todostatus"
+	"story.com/story/app/ent/model/user"
 )
 
 // Todo is the model entity for the Todo schema.
 type Todo struct {
 	config `json:"-"`
 	// ID of the ent.
-	ID uint `json:"id,omitempty"`
+	ID int `json:"id,omitempty"`
 	// Todo holds the value of the "todo" field.
 	Todo string `json:"todo,omitempty"`
 	// UserID holds the value of the "user_id" field.
@@ -101,7 +101,7 @@ func (t *Todo) assignValues(columns []string, values []any) error {
 			if !ok {
 				return fmt.Errorf("unexpected type %T for field id", value)
 			}
-			t.ID = uint(value.Int64)
+			t.ID = int(value.Int64)
 		case todo.FieldTodo:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field todo", values[i])

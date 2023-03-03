@@ -6,14 +6,14 @@ import (
 	"context"
 	"fmt"
 	"math"
-	"server/ent/model/predicate"
-	"server/ent/model/todo"
-	"server/ent/model/todostatus"
-	"server/ent/model/user"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"story.com/story/app/ent/model/predicate"
+	"story.com/story/app/ent/model/todo"
+	"story.com/story/app/ent/model/todostatus"
+	"story.com/story/app/ent/model/user"
 )
 
 // TodoQuery is the builder for querying Todo entities.
@@ -129,8 +129,8 @@ func (tq *TodoQuery) FirstX(ctx context.Context) *Todo {
 
 // FirstID returns the first Todo ID from the query.
 // Returns a *NotFoundError when no Todo ID was found.
-func (tq *TodoQuery) FirstID(ctx context.Context) (id uint, err error) {
-	var ids []uint
+func (tq *TodoQuery) FirstID(ctx context.Context) (id int, err error) {
+	var ids []int
 	if ids, err = tq.Limit(1).IDs(setContextOp(ctx, tq.ctx, "FirstID")); err != nil {
 		return
 	}
@@ -142,7 +142,7 @@ func (tq *TodoQuery) FirstID(ctx context.Context) (id uint, err error) {
 }
 
 // FirstIDX is like FirstID, but panics if an error occurs.
-func (tq *TodoQuery) FirstIDX(ctx context.Context) uint {
+func (tq *TodoQuery) FirstIDX(ctx context.Context) int {
 	id, err := tq.FirstID(ctx)
 	if err != nil && !IsNotFound(err) {
 		panic(err)
@@ -180,8 +180,8 @@ func (tq *TodoQuery) OnlyX(ctx context.Context) *Todo {
 // OnlyID is like Only, but returns the only Todo ID in the query.
 // Returns a *NotSingularError when more than one Todo ID is found.
 // Returns a *NotFoundError when no entities are found.
-func (tq *TodoQuery) OnlyID(ctx context.Context) (id uint, err error) {
-	var ids []uint
+func (tq *TodoQuery) OnlyID(ctx context.Context) (id int, err error) {
+	var ids []int
 	if ids, err = tq.Limit(2).IDs(setContextOp(ctx, tq.ctx, "OnlyID")); err != nil {
 		return
 	}
@@ -197,7 +197,7 @@ func (tq *TodoQuery) OnlyID(ctx context.Context) (id uint, err error) {
 }
 
 // OnlyIDX is like OnlyID, but panics if an error occurs.
-func (tq *TodoQuery) OnlyIDX(ctx context.Context) uint {
+func (tq *TodoQuery) OnlyIDX(ctx context.Context) int {
 	id, err := tq.OnlyID(ctx)
 	if err != nil {
 		panic(err)
@@ -225,7 +225,7 @@ func (tq *TodoQuery) AllX(ctx context.Context) []*Todo {
 }
 
 // IDs executes the query and returns a list of Todo IDs.
-func (tq *TodoQuery) IDs(ctx context.Context) (ids []uint, err error) {
+func (tq *TodoQuery) IDs(ctx context.Context) (ids []int, err error) {
 	if tq.ctx.Unique == nil && tq.path != nil {
 		tq.Unique(true)
 	}
@@ -237,7 +237,7 @@ func (tq *TodoQuery) IDs(ctx context.Context) (ids []uint, err error) {
 }
 
 // IDsX is like IDs, but panics if an error occurs.
-func (tq *TodoQuery) IDsX(ctx context.Context) []uint {
+func (tq *TodoQuery) IDsX(ctx context.Context) []int {
 	ids, err := tq.IDs(ctx)
 	if err != nil {
 		panic(err)
@@ -512,7 +512,7 @@ func (tq *TodoQuery) sqlCount(ctx context.Context) (int, error) {
 }
 
 func (tq *TodoQuery) querySpec() *sqlgraph.QuerySpec {
-	_spec := sqlgraph.NewQuerySpec(todo.Table, todo.Columns, sqlgraph.NewFieldSpec(todo.FieldID, field.TypeUint))
+	_spec := sqlgraph.NewQuerySpec(todo.Table, todo.Columns, sqlgraph.NewFieldSpec(todo.FieldID, field.TypeInt))
 	_spec.From = tq.sql
 	if unique := tq.ctx.Unique; unique != nil {
 		_spec.Unique = *unique

@@ -6,13 +6,13 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"server/ent/model/todo"
-	"server/ent/model/todostatus"
-	"server/ent/model/user"
 	"time"
 
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"story.com/story/app/ent/model/todo"
+	"story.com/story/app/ent/model/todostatus"
+	"story.com/story/app/ent/model/user"
 )
 
 // TodoCreate is the builder for creating a Todo entity.
@@ -69,8 +69,8 @@ func (tc *TodoCreate) SetUpdatedAt(t time.Time) *TodoCreate {
 }
 
 // SetID sets the "id" field.
-func (tc *TodoCreate) SetID(u uint) *TodoCreate {
-	tc.mutation.SetID(u)
+func (tc *TodoCreate) SetID(i int) *TodoCreate {
+	tc.mutation.SetID(i)
 	return tc
 }
 
@@ -157,7 +157,7 @@ func (tc *TodoCreate) sqlSave(ctx context.Context) (*Todo, error) {
 	}
 	if _spec.ID.Value != _node.ID {
 		id := _spec.ID.Value.(int64)
-		_node.ID = uint(id)
+		_node.ID = int(id)
 	}
 	tc.mutation.id = &_node.ID
 	tc.mutation.done = true
@@ -167,7 +167,7 @@ func (tc *TodoCreate) sqlSave(ctx context.Context) (*Todo, error) {
 func (tc *TodoCreate) createSpec() (*Todo, *sqlgraph.CreateSpec) {
 	var (
 		_node = &Todo{config: tc.config}
-		_spec = sqlgraph.NewCreateSpec(todo.Table, sqlgraph.NewFieldSpec(todo.FieldID, field.TypeUint))
+		_spec = sqlgraph.NewCreateSpec(todo.Table, sqlgraph.NewFieldSpec(todo.FieldID, field.TypeInt))
 	)
 	if id, ok := tc.mutation.ID(); ok {
 		_node.ID = id
@@ -270,7 +270,7 @@ func (tcb *TodoCreateBulk) Save(ctx context.Context) ([]*Todo, error) {
 				mutation.id = &nodes[i].ID
 				if specs[i].ID.Value != nil && nodes[i].ID == 0 {
 					id := specs[i].ID.Value.(int64)
-					nodes[i].ID = uint(id)
+					nodes[i].ID = int(id)
 				}
 				mutation.done = true
 				return nodes[i], nil

@@ -6,12 +6,12 @@ import (
 	"context"
 	"fmt"
 	"math"
-	"server/ent/model/arinternalmetadatum"
-	"server/ent/model/predicate"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"story.com/story/app/ent/model/arinternalmetadatum"
+	"story.com/story/app/ent/model/predicate"
 )
 
 // ArInternalMetadatumQuery is the builder for querying ArInternalMetadatum entities.

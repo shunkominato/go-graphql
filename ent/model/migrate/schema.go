@@ -21,26 +21,6 @@ var (
 		Columns:    ArInternalMetadataColumns,
 		PrimaryKey: []*schema.Column{ArInternalMetadataColumns[0]},
 	}
-	// CompaniesColumns holds the columns for the "companies" table.
-	CompaniesColumns = []*schema.Column{
-		{Name: "id", Type: field.TypeInt, Increment: true},
-	}
-	// CompaniesTable holds the schema information for the "companies" table.
-	CompaniesTable = &schema.Table{
-		Name:       "companies",
-		Columns:    CompaniesColumns,
-		PrimaryKey: []*schema.Column{CompaniesColumns[0]},
-	}
-	// ExamplesColumns holds the columns for the "examples" table.
-	ExamplesColumns = []*schema.Column{
-		{Name: "id", Type: field.TypeInt, Increment: true},
-	}
-	// ExamplesTable holds the schema information for the "examples" table.
-	ExamplesTable = &schema.Table{
-		Name:       "examples",
-		Columns:    ExamplesColumns,
-		PrimaryKey: []*schema.Column{ExamplesColumns[0]},
-	}
 	// SchemaMigrationsColumns holds the columns for the "schema_migrations" table.
 	SchemaMigrationsColumns = []*schema.Column{
 		{Name: "version", Type: field.TypeString},
@@ -53,7 +33,7 @@ var (
 	}
 	// TodosColumns holds the columns for the "todos" table.
 	TodosColumns = []*schema.Column{
-		{Name: "id", Type: field.TypeUint, Increment: true, SchemaType: map[string]string{"postgres": "bigserial"}},
+		{Name: "id", Type: field.TypeInt, Increment: true, SchemaType: map[string]string{"postgres": "bigserial"}},
 		{Name: "todo", Type: field.TypeString},
 		{Name: "created_at", Type: field.TypeTime},
 		{Name: "updated_at", Type: field.TypeTime},
@@ -124,8 +104,6 @@ var (
 	// Tables holds all the tables in the schema.
 	Tables = []*schema.Table{
 		ArInternalMetadataTable,
-		CompaniesTable,
-		ExamplesTable,
 		SchemaMigrationsTable,
 		TodosTable,
 		TodoStatusTable,

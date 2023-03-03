@@ -5,7 +5,8 @@ package hook
 import (
 	"context"
 	"fmt"
-	"server/ent/model"
+
+	"story.com/story/app/ent/model"
 )
 
 // The ArInternalMetadatumFunc type is an adapter to allow the use of ordinary
@@ -18,30 +19,6 @@ func (f ArInternalMetadatumFunc) Mutate(ctx context.Context, m model.Mutation) (
 		return f(ctx, mv)
 	}
 	return nil, fmt.Errorf("unexpected mutation type %T. expect *model.ArInternalMetadatumMutation", m)
-}
-
-// The CompanyFunc type is an adapter to allow the use of ordinary
-// function as Company mutator.
-type CompanyFunc func(context.Context, *model.CompanyMutation) (model.Value, error)
-
-// Mutate calls f(ctx, m).
-func (f CompanyFunc) Mutate(ctx context.Context, m model.Mutation) (model.Value, error) {
-	if mv, ok := m.(*model.CompanyMutation); ok {
-		return f(ctx, mv)
-	}
-	return nil, fmt.Errorf("unexpected mutation type %T. expect *model.CompanyMutation", m)
-}
-
-// The ExampleFunc type is an adapter to allow the use of ordinary
-// function as Example mutator.
-type ExampleFunc func(context.Context, *model.ExampleMutation) (model.Value, error)
-
-// Mutate calls f(ctx, m).
-func (f ExampleFunc) Mutate(ctx context.Context, m model.Mutation) (model.Value, error) {
-	if mv, ok := m.(*model.ExampleMutation); ok {
-		return f(ctx, mv)
-	}
-	return nil, fmt.Errorf("unexpected mutation type %T. expect *model.ExampleMutation", m)
 }
 
 // The SchemaMigrationFunc type is an adapter to allow the use of ordinary

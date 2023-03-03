@@ -7,13 +7,13 @@ import (
 	"database/sql/driver"
 	"fmt"
 	"math"
-	"server/ent/model/predicate"
-	"server/ent/model/todo"
-	"server/ent/model/todostatus"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"story.com/story/app/ent/model/predicate"
+	"story.com/story/app/ent/model/todo"
+	"story.com/story/app/ent/model/todostatus"
 )
 
 // TodoStatusQuery is the builder for querying TodoStatus entities.

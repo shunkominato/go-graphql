@@ -4,12 +4,12 @@ package model
 
 import (
 	"context"
-	"server/ent/model/predicate"
-	"server/ent/model/todostatus"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"story.com/story/app/ent/model/predicate"
+	"story.com/story/app/ent/model/todostatus"
 )
 
 // TodoStatusDelete is the builder for deleting a TodoStatus entity.

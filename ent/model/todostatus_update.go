@@ -6,14 +6,14 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"server/ent/model/predicate"
-	"server/ent/model/todo"
-	"server/ent/model/todostatus"
 	"time"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"story.com/story/app/ent/model/predicate"
+	"story.com/story/app/ent/model/todo"
+	"story.com/story/app/ent/model/todostatus"
 )
 
 // TodoStatusUpdate is the builder for updating TodoStatus entities.
@@ -48,14 +48,14 @@ func (tsu *TodoStatusUpdate) SetUpdatedAt(t time.Time) *TodoStatusUpdate {
 }
 
 // AddTodoIDs adds the "todos" edge to the Todo entity by IDs.
-func (tsu *TodoStatusUpdate) AddTodoIDs(ids ...uint) *TodoStatusUpdate {
+func (tsu *TodoStatusUpdate) AddTodoIDs(ids ...int) *TodoStatusUpdate {
 	tsu.mutation.AddTodoIDs(ids...)
 	return tsu
 }
 
 // AddTodos adds the "todos" edges to the Todo entity.
 func (tsu *TodoStatusUpdate) AddTodos(t ...*Todo) *TodoStatusUpdate {
-	ids := make([]uint, len(t))
+	ids := make([]int, len(t))
 	for i := range t {
 		ids[i] = t[i].ID
 	}
@@ -74,14 +74,14 @@ func (tsu *TodoStatusUpdate) ClearTodos() *TodoStatusUpdate {
 }
 
 // RemoveTodoIDs removes the "todos" edge to Todo entities by IDs.
-func (tsu *TodoStatusUpdate) RemoveTodoIDs(ids ...uint) *TodoStatusUpdate {
+func (tsu *TodoStatusUpdate) RemoveTodoIDs(ids ...int) *TodoStatusUpdate {
 	tsu.mutation.RemoveTodoIDs(ids...)
 	return tsu
 }
 
 // RemoveTodos removes "todos" edges to Todo entities.
 func (tsu *TodoStatusUpdate) RemoveTodos(t ...*Todo) *TodoStatusUpdate {
-	ids := make([]uint, len(t))
+	ids := make([]int, len(t))
 	for i := range t {
 		ids[i] = t[i].ID
 	}
@@ -142,7 +142,7 @@ func (tsu *TodoStatusUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeUint,
+					Type:   field.TypeInt,
 					Column: todo.FieldID,
 				},
 			},
@@ -158,7 +158,7 @@ func (tsu *TodoStatusUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeUint,
+					Type:   field.TypeInt,
 					Column: todo.FieldID,
 				},
 			},
@@ -177,7 +177,7 @@ func (tsu *TodoStatusUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeUint,
+					Type:   field.TypeInt,
 					Column: todo.FieldID,
 				},
 			},
@@ -226,14 +226,14 @@ func (tsuo *TodoStatusUpdateOne) SetUpdatedAt(t time.Time) *TodoStatusUpdateOne 
 }
 
 // AddTodoIDs adds the "todos" edge to the Todo entity by IDs.
-func (tsuo *TodoStatusUpdateOne) AddTodoIDs(ids ...uint) *TodoStatusUpdateOne {
+func (tsuo *TodoStatusUpdateOne) AddTodoIDs(ids ...int) *TodoStatusUpdateOne {
 	tsuo.mutation.AddTodoIDs(ids...)
 	return tsuo
 }
 
 // AddTodos adds the "todos" edges to the Todo entity.
 func (tsuo *TodoStatusUpdateOne) AddTodos(t ...*Todo) *TodoStatusUpdateOne {
-	ids := make([]uint, len(t))
+	ids := make([]int, len(t))
 	for i := range t {
 		ids[i] = t[i].ID
 	}
@@ -252,14 +252,14 @@ func (tsuo *TodoStatusUpdateOne) ClearTodos() *TodoStatusUpdateOne {
 }
 
 // RemoveTodoIDs removes the "todos" edge to Todo entities by IDs.
-func (tsuo *TodoStatusUpdateOne) RemoveTodoIDs(ids ...uint) *TodoStatusUpdateOne {
+func (tsuo *TodoStatusUpdateOne) RemoveTodoIDs(ids ...int) *TodoStatusUpdateOne {
 	tsuo.mutation.RemoveTodoIDs(ids...)
 	return tsuo
 }
 
 // RemoveTodos removes "todos" edges to Todo entities.
 func (tsuo *TodoStatusUpdateOne) RemoveTodos(t ...*Todo) *TodoStatusUpdateOne {
-	ids := make([]uint, len(t))
+	ids := make([]int, len(t))
 	for i := range t {
 		ids[i] = t[i].ID
 	}
@@ -350,7 +350,7 @@ func (tsuo *TodoStatusUpdateOne) sqlSave(ctx context.Context) (_node *TodoStatus
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeUint,
+					Type:   field.TypeInt,
 					Column: todo.FieldID,
 				},
 			},
@@ -366,7 +366,7 @@ func (tsuo *TodoStatusUpdateOne) sqlSave(ctx context.Context) (_node *TodoStatus
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeUint,
+					Type:   field.TypeInt,
 					Column: todo.FieldID,
 				},
 			},
@@ -385,7 +385,7 @@ func (tsuo *TodoStatusUpdateOne) sqlSave(ctx context.Context) (_node *TodoStatus
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeUint,
+					Type:   field.TypeInt,
 					Column: todo.FieldID,
 				},
 			},

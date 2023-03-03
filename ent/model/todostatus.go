@@ -4,11 +4,11 @@ package model
 
 import (
 	"fmt"
-	"server/ent/model/todostatus"
 	"strings"
 	"time"
 
 	"entgo.io/ent/dialect/sql"
+	"story.com/story/app/ent/model/todostatus"
 )
 
 // TodoStatus is the model entity for the TodoStatus schema.

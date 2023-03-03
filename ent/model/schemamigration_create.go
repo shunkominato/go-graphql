@@ -5,10 +5,10 @@ package model
 import (
 	"context"
 	"fmt"
-	"server/ent/model/schemamigration"
 
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"story.com/story/app/ent/model/schemamigration"
 )
 
 // SchemaMigrationCreate is the builder for creating a SchemaMigration entity.

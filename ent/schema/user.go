@@ -15,6 +15,7 @@ type User struct {
 
 func (User) Fields() []ent.Field {
 	return []ent.Field{field.Int("id").SchemaType(map[string]string{"postgres": "bigserial"}), field.String("provider"), field.String("uid"), field.String("encrypted_password"), field.String("reset_password_token").Optional().Unique(), field.Time("reset_password_sent_at").Optional(), field.Bool("allow_password_change").Optional(), field.Time("remember_created_at").Optional(), field.String("confirmation_token").Optional().Unique(), field.Time("confirmed_at").Optional(), field.Time("confirmation_sent_at").Optional(), field.String("unconfirmed_email").Optional(), field.String("name").Optional(), field.String("nickname").Optional(), field.String("image").Optional(), field.String("email").Optional().Unique(), field.JSON("tokens", []string{}).Optional(), field.Time("created_at"), field.Time("updated_at")}
+
 }
 func (User) Edges() []ent.Edge {
 	return []ent.Edge{edge.To("todos", Todo.Type)}

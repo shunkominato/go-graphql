@@ -4,12 +4,12 @@ package model
 
 import (
 	"context"
-	"server/ent/model/predicate"
-	"server/ent/model/todo"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"story.com/story/app/ent/model/predicate"
+	"story.com/story/app/ent/model/todo"
 )
 
 // TodoDelete is the builder for deleting a Todo entity.
@@ -40,7 +40,7 @@ func (td *TodoDelete) ExecX(ctx context.Context) int {
 }
 
 func (td *TodoDelete) sqlExec(ctx context.Context) (int, error) {
-	_spec := sqlgraph.NewDeleteSpec(todo.Table, sqlgraph.NewFieldSpec(todo.FieldID, field.TypeUint))
+	_spec := sqlgraph.NewDeleteSpec(todo.Table, sqlgraph.NewFieldSpec(todo.FieldID, field.TypeInt))
 	if ps := td.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {

@@ -6,13 +6,13 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"server/ent/model/arinternalmetadatum"
-	"server/ent/model/predicate"
 	"time"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"story.com/story/app/ent/model/arinternalmetadatum"
+	"story.com/story/app/ent/model/predicate"
 )
 
 // ArInternalMetadatumUpdate is the builder for updating ArInternalMetadatum entities.

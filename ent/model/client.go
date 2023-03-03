@@ -8,20 +8,17 @@ import (
 	"fmt"
 	"log"
 
-	"server/ent/model/migrate"
-
-	"server/ent/model/arinternalmetadatum"
-	"server/ent/model/company"
-	"server/ent/model/example"
-	"server/ent/model/schemamigration"
-	"server/ent/model/todo"
-	"server/ent/model/todostatus"
-	"server/ent/model/user"
+	"story.com/story/app/ent/model/migrate"
 
 	"entgo.io/ent"
 	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
+	"story.com/story/app/ent/model/arinternalmetadatum"
+	"story.com/story/app/ent/model/schemamigration"
+	"story.com/story/app/ent/model/todo"
+	"story.com/story/app/ent/model/todostatus"
+	"story.com/story/app/ent/model/user"
 )
 
 // Client is the client that holds all ent builders.
@@ -31,10 +28,6 @@ type Client struct {
 	Schema *migrate.Schema
 	// ArInternalMetadatum is the client for interacting with the ArInternalMetadatum builders.
 	ArInternalMetadatum *ArInternalMetadatumClient
-	// Company is the client for interacting with the Company builders.
-	Company *CompanyClient
-	// Example is the client for interacting with the Example builders.
-	Example *ExampleClient
 	// SchemaMigration is the client for interacting with the SchemaMigration builders.
 	SchemaMigration *SchemaMigrationClient
 	// Todo is the client for interacting with the Todo builders.
@@ -57,8 +50,6 @@ func NewClient(opts ...Option) *Client {
 func (c *Client) init() {
 	c.Schema = migrate.NewSchema(c.driver)
 	c.ArInternalMetadatum = NewArInternalMetadatumClient(c.config)
-	c.Company = NewCompanyClient(c.config)
-	c.Example = NewExampleClient(c.config)
 	c.SchemaMigration = NewSchemaMigrationClient(c.config)
 	c.Todo = NewTodoClient(c.config)
 	c.TodoStatus = NewTodoStatusClient(c.config)
@@ -146,8 +137,6 @@ func (c *Client) Tx(ctx context.Context) (*Tx, error) {
 		ctx:                 ctx,
 		config:              cfg,
 		ArInternalMetadatum: NewArInternalMetadatumClient(cfg),
-		Company:             NewCompanyClient(cfg),
-		Example:             NewExampleClient(cfg),
 		SchemaMigration:     NewSchemaMigrationClient(cfg),
 		Todo:                NewTodoClient(cfg),
 		TodoStatus:          NewTodoStatusClient(cfg),
@@ -172,8 +161,6 @@ func (c *Client) BeginTx(ctx context.Context, opts *sql.TxOptions) (*Tx, error) 
 		ctx:                 ctx,
 		config:              cfg,
 		ArInternalMetadatum: NewArInternalMetadatumClient(cfg),
-		Company:             NewCompanyClient(cfg),
-		Example:             NewExampleClient(cfg),
 		SchemaMigration:     NewSchemaMigrationClient(cfg),
 		Todo:                NewTodoClient(cfg),
 		TodoStatus:          NewTodoStatusClient(cfg),
@@ -206,23 +193,21 @@ func (c *Client) Close() error {
 // Use adds the mutation hooks to all the entity clients.
 // In order to add hooks to a specific client, call: `client.Node.Use(...)`.
 func (c *Client) Use(hooks ...Hook) {
-	for _, n := range []interface{ Use(...Hook) }{
-		c.ArInternalMetadatum, c.Company, c.Example, c.SchemaMigration, c.Todo,
-		c.TodoStatus, c.User,
-	} {
-		n.Use(hooks...)
-	}
+	c.ArInternalMetadatum.Use(hooks...)
+	c.SchemaMigration.Use(hooks...)
+	c.Todo.Use(hooks...)
+	c.TodoStatus.Use(hooks...)
+	c.User.Use(hooks...)
 }
 
 // Intercept adds the query interceptors to all the entity clients.
 // In order to add interceptors to a specific client, call: `client.Node.Intercept(...)`.
 func (c *Client) Intercept(interceptors ...Interceptor) {
-	for _, n := range []interface{ Intercept(...Interceptor) }{
-		c.ArInternalMetadatum, c.Company, c.Example, c.SchemaMigration, c.Todo,
-		c.TodoStatus, c.User,
-	} {
-		n.Intercept(interceptors...)
-	}
+	c.ArInternalMetadatum.Intercept(interceptors...)
+	c.SchemaMigration.Intercept(interceptors...)
+	c.Todo.Intercept(interceptors...)
+	c.TodoStatus.Intercept(interceptors...)
+	c.User.Intercept(interceptors...)
 }
 
 // Mutate implements the ent.Mutator interface.
@@ -230,10 +215,6 @@ func (c *Client) Mutate(ctx context.Context, m Mutation) (Value, error) {
 	switch m := m.(type) {
 	case *ArInternalMetadatumMutation:
 		return c.ArInternalMetadatum.mutate(ctx, m)
-	case *CompanyMutation:
-		return c.Company.mutate(ctx, m)
-	case *ExampleMutation:
-		return c.Example.mutate(ctx, m)
 	case *SchemaMigrationMutation:
 		return c.SchemaMigration.mutate(ctx, m)
 	case *TodoMutation:
@@ -362,242 +343,6 @@ func (c *ArInternalMetadatumClient) mutate(ctx context.Context, m *ArInternalMet
 		return (&ArInternalMetadatumDelete{config: c.config, hooks: c.Hooks(), mutation: m}).Exec(ctx)
 	default:
 		return nil, fmt.Errorf("model: unknown ArInternalMetadatum mutation op: %q", m.Op())
-	}
-}
-
-// CompanyClient is a client for the Company schema.
-type CompanyClient struct {
-	config
-}
-
-// NewCompanyClient returns a client for the Company from the given config.
-func NewCompanyClient(c config) *CompanyClient {
-	return &CompanyClient{config: c}
-}
-
-// Use adds a list of mutation hooks to the hooks stack.
-// A call to `Use(f, g, h)` equals to `company.Hooks(f(g(h())))`.
-func (c *CompanyClient) Use(hooks ...Hook) {
-	c.hooks.Company = append(c.hooks.Company, hooks...)
-}
-
-// Intercept adds a list of query interceptors to the interceptors stack.
-// A call to `Intercept(f, g, h)` equals to `company.Intercept(f(g(h())))`.
-func (c *CompanyClient) Intercept(interceptors ...Interceptor) {
-	c.inters.Company = append(c.inters.Company, interceptors...)
-}
-
-// Create returns a builder for creating a Company entity.
-func (c *CompanyClient) Create() *CompanyCreate {
-	mutation := newCompanyMutation(c.config, OpCreate)
-	return &CompanyCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// CreateBulk returns a builder for creating a bulk of Company entities.
-func (c *CompanyClient) CreateBulk(builders ...*CompanyCreate) *CompanyCreateBulk {
-	return &CompanyCreateBulk{config: c.config, builders: builders}
-}
-
-// Update returns an update builder for Company.
-func (c *CompanyClient) Update() *CompanyUpdate {
-	mutation := newCompanyMutation(c.config, OpUpdate)
-	return &CompanyUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// UpdateOne returns an update builder for the given entity.
-func (c *CompanyClient) UpdateOne(co *Company) *CompanyUpdateOne {
-	mutation := newCompanyMutation(c.config, OpUpdateOne, withCompany(co))
-	return &CompanyUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// UpdateOneID returns an update builder for the given id.
-func (c *CompanyClient) UpdateOneID(id int) *CompanyUpdateOne {
-	mutation := newCompanyMutation(c.config, OpUpdateOne, withCompanyID(id))
-	return &CompanyUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// Delete returns a delete builder for Company.
-func (c *CompanyClient) Delete() *CompanyDelete {
-	mutation := newCompanyMutation(c.config, OpDelete)
-	return &CompanyDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// DeleteOne returns a builder for deleting the given entity.
-func (c *CompanyClient) DeleteOne(co *Company) *CompanyDeleteOne {
-	return c.DeleteOneID(co.ID)
-}
-
-// DeleteOneID returns a builder for deleting the given entity by its id.
-func (c *CompanyClient) DeleteOneID(id int) *CompanyDeleteOne {
-	builder := c.Delete().Where(company.ID(id))
-	builder.mutation.id = &id
-	builder.mutation.op = OpDeleteOne
-	return &CompanyDeleteOne{builder}
-}
-
-// Query returns a query builder for Company.
-func (c *CompanyClient) Query() *CompanyQuery {
-	return &CompanyQuery{
-		config: c.config,
-		ctx:    &QueryContext{Type: TypeCompany},
-		inters: c.Interceptors(),
-	}
-}
-
-// Get returns a Company entity by its id.
-func (c *CompanyClient) Get(ctx context.Context, id int) (*Company, error) {
-	return c.Query().Where(company.ID(id)).Only(ctx)
-}
-
-// GetX is like Get, but panics if an error occurs.
-func (c *CompanyClient) GetX(ctx context.Context, id int) *Company {
-	obj, err := c.Get(ctx, id)
-	if err != nil {
-		panic(err)
-	}
-	return obj
-}
-
-// Hooks returns the client hooks.
-func (c *CompanyClient) Hooks() []Hook {
-	return c.hooks.Company
-}
-
-// Interceptors returns the client interceptors.
-func (c *CompanyClient) Interceptors() []Interceptor {
-	return c.inters.Company
-}
-
-func (c *CompanyClient) mutate(ctx context.Context, m *CompanyMutation) (Value, error) {
-	switch m.Op() {
-	case OpCreate:
-		return (&CompanyCreate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
-	case OpUpdate:
-		return (&CompanyUpdate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
-	case OpUpdateOne:
-		return (&CompanyUpdateOne{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
-	case OpDelete, OpDeleteOne:
-		return (&CompanyDelete{config: c.config, hooks: c.Hooks(), mutation: m}).Exec(ctx)
-	default:
-		return nil, fmt.Errorf("model: unknown Company mutation op: %q", m.Op())
-	}
-}
-
-// ExampleClient is a client for the Example schema.
-type ExampleClient struct {
-	config
-}
-
-// NewExampleClient returns a client for the Example from the given config.
-func NewExampleClient(c config) *ExampleClient {
-	return &ExampleClient{config: c}
-}
-
-// Use adds a list of mutation hooks to the hooks stack.
-// A call to `Use(f, g, h)` equals to `example.Hooks(f(g(h())))`.
-func (c *ExampleClient) Use(hooks ...Hook) {
-	c.hooks.Example = append(c.hooks.Example, hooks...)
-}
-
-// Intercept adds a list of query interceptors to the interceptors stack.
-// A call to `Intercept(f, g, h)` equals to `example.Intercept(f(g(h())))`.
-func (c *ExampleClient) Intercept(interceptors ...Interceptor) {
-	c.inters.Example = append(c.inters.Example, interceptors...)
-}
-
-// Create returns a builder for creating a Example entity.
-func (c *ExampleClient) Create() *ExampleCreate {
-	mutation := newExampleMutation(c.config, OpCreate)
-	return &ExampleCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// CreateBulk returns a builder for creating a bulk of Example entities.
-func (c *ExampleClient) CreateBulk(builders ...*ExampleCreate) *ExampleCreateBulk {
-	return &ExampleCreateBulk{config: c.config, builders: builders}
-}
-
-// Update returns an update builder for Example.
-func (c *ExampleClient) Update() *ExampleUpdate {
-	mutation := newExampleMutation(c.config, OpUpdate)
-	return &ExampleUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// UpdateOne returns an update builder for the given entity.
-func (c *ExampleClient) UpdateOne(e *Example) *ExampleUpdateOne {
-	mutation := newExampleMutation(c.config, OpUpdateOne, withExample(e))
-	return &ExampleUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// UpdateOneID returns an update builder for the given id.
-func (c *ExampleClient) UpdateOneID(id int) *ExampleUpdateOne {
-	mutation := newExampleMutation(c.config, OpUpdateOne, withExampleID(id))
-	return &ExampleUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// Delete returns a delete builder for Example.
-func (c *ExampleClient) Delete() *ExampleDelete {
-	mutation := newExampleMutation(c.config, OpDelete)
-	return &ExampleDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// DeleteOne returns a builder for deleting the given entity.
-func (c *ExampleClient) DeleteOne(e *Example) *ExampleDeleteOne {
-	return c.DeleteOneID(e.ID)
-}
-
-// DeleteOneID returns a builder for deleting the given entity by its id.
-func (c *ExampleClient) DeleteOneID(id int) *ExampleDeleteOne {
-	builder := c.Delete().Where(example.ID(id))
-	builder.mutation.id = &id
-	builder.mutation.op = OpDeleteOne
-	return &ExampleDeleteOne{builder}
-}
-
-// Query returns a query builder for Example.
-func (c *ExampleClient) Query() *ExampleQuery {
-	return &ExampleQuery{
-		config: c.config,
-		ctx:    &QueryContext{Type: TypeExample},
-		inters: c.Interceptors(),
-	}
-}
-
-// Get returns a Example entity by its id.
-func (c *ExampleClient) Get(ctx context.Context, id int) (*Example, error) {
-	return c.Query().Where(example.ID(id)).Only(ctx)
-}
-
-// GetX is like Get, but panics if an error occurs.
-func (c *ExampleClient) GetX(ctx context.Context, id int) *Example {
-	obj, err := c.Get(ctx, id)
-	if err != nil {
-		panic(err)
-	}
-	return obj
-}
-
-// Hooks returns the client hooks.
-func (c *ExampleClient) Hooks() []Hook {
-	return c.hooks.Example
-}
-
-// Interceptors returns the client interceptors.
-func (c *ExampleClient) Interceptors() []Interceptor {
-	return c.inters.Example
-}
-
-func (c *ExampleClient) mutate(ctx context.Context, m *ExampleMutation) (Value, error) {
-	switch m.Op() {
-	case OpCreate:
-		return (&ExampleCreate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
-	case OpUpdate:
-		return (&ExampleUpdate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
-	case OpUpdateOne:
-		return (&ExampleUpdateOne{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
-	case OpDelete, OpDeleteOne:
-		return (&ExampleDelete{config: c.config, hooks: c.Hooks(), mutation: m}).Exec(ctx)
-	default:
-		return nil, fmt.Errorf("model: unknown Example mutation op: %q", m.Op())
 	}
 }
 
@@ -765,7 +510,7 @@ func (c *TodoClient) UpdateOne(t *Todo) *TodoUpdateOne {
 }
 
 // UpdateOneID returns an update builder for the given id.
-func (c *TodoClient) UpdateOneID(id uint) *TodoUpdateOne {
+func (c *TodoClient) UpdateOneID(id int) *TodoUpdateOne {
 	mutation := newTodoMutation(c.config, OpUpdateOne, withTodoID(id))
 	return &TodoUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
@@ -782,7 +527,7 @@ func (c *TodoClient) DeleteOne(t *Todo) *TodoDeleteOne {
 }
 
 // DeleteOneID returns a builder for deleting the given entity by its id.
-func (c *TodoClient) DeleteOneID(id uint) *TodoDeleteOne {
+func (c *TodoClient) DeleteOneID(id int) *TodoDeleteOne {
 	builder := c.Delete().Where(todo.ID(id))
 	builder.mutation.id = &id
 	builder.mutation.op = OpDeleteOne
@@ -799,12 +544,12 @@ func (c *TodoClient) Query() *TodoQuery {
 }
 
 // Get returns a Todo entity by its id.
-func (c *TodoClient) Get(ctx context.Context, id uint) (*Todo, error) {
+func (c *TodoClient) Get(ctx context.Context, id int) (*Todo, error) {
 	return c.Query().Where(todo.ID(id)).Only(ctx)
 }
 
 // GetX is like Get, but panics if an error occurs.
-func (c *TodoClient) GetX(ctx context.Context, id uint) *Todo {
+func (c *TodoClient) GetX(ctx context.Context, id int) *Todo {
 	obj, err := c.Get(ctx, id)
 	if err != nil {
 		panic(err)
@@ -1140,11 +885,9 @@ func (c *UserClient) mutate(ctx context.Context, m *UserMutation) (Value, error)
 // hooks and interceptors per client, for fast access.
 type (
 	hooks struct {
-		ArInternalMetadatum, Company, Example, SchemaMigration, Todo, TodoStatus,
-		User []ent.Hook
+		ArInternalMetadatum, SchemaMigration, Todo, TodoStatus, User []ent.Hook
 	}
 	inters struct {
-		ArInternalMetadatum, Company, Example, SchemaMigration, Todo, TodoStatus,
-		User []ent.Interceptor
+		ArInternalMetadatum, SchemaMigration, Todo, TodoStatus, User []ent.Interceptor
 	}
 )
