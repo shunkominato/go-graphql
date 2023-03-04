@@ -5,12 +5,10 @@ import (
 	"fmt"
 	"log"
 
-	// "server/ent"
-
-	// "entgo.io/ent/entc/integration/ent"
-	// "entgo.io/ent/entc/integration/ent"
+	// "entgo.io/ent/entc/integration/multischema/ent"
 	"entgo.io/ent/entc/integration/ent"
 	_ "github.com/lib/pq"
+	_ "story.com/story/app/ent"
 )
 
 func main() {
@@ -27,7 +25,7 @@ func main() {
 
 		log.Print()
 		log.Print(err)
-		aa, er := client.Todo.Query().All(context.Background())
+		aa, er := client..Query().All(context.Background())
     log.Print(aa)
     log.Print(er)
 	// // e := echo.New()
