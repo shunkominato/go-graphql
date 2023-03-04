@@ -33,6 +33,30 @@ func (f SchemaMigrationFunc) Mutate(ctx context.Context, m model.Mutation) (mode
 	return nil, fmt.Errorf("unexpected mutation type %T. expect *model.SchemaMigrationMutation", m)
 }
 
+// The TodoFunc type is an adapter to allow the use of ordinary
+// function as Todo mutator.
+type TodoFunc func(context.Context, *model.TodoMutation) (model.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f TodoFunc) Mutate(ctx context.Context, m model.Mutation) (model.Value, error) {
+	if mv, ok := m.(*model.TodoMutation); ok {
+		return f(ctx, mv)
+	}
+	return nil, fmt.Errorf("unexpected mutation type %T. expect *model.TodoMutation", m)
+}
+
+// The TodoStatusFunc type is an adapter to allow the use of ordinary
+// function as TodoStatus mutator.
+type TodoStatusFunc func(context.Context, *model.TodoStatusMutation) (model.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f TodoStatusFunc) Mutate(ctx context.Context, m model.Mutation) (model.Value, error) {
+	if mv, ok := m.(*model.TodoStatusMutation); ok {
+		return f(ctx, mv)
+	}
+	return nil, fmt.Errorf("unexpected mutation type %T. expect *model.TodoStatusMutation", m)
+}
+
 // The UserFunc type is an adapter to allow the use of ordinary
 // function as User mutator.
 type UserFunc func(context.Context, *model.UserMutation) (model.Value, error)

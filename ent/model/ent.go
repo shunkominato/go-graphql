@@ -13,6 +13,8 @@ import (
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"story.com/story/app/ent/model/arinternalmetadatum"
 	"story.com/story/app/ent/model/schemamigration"
+	"story.com/story/app/ent/model/todo"
+	"story.com/story/app/ent/model/todostatus"
 	"story.com/story/app/ent/model/user"
 )
 
@@ -69,6 +71,8 @@ func columnChecker(table string) func(string) error {
 	checks := map[string]func(string) bool{
 		arinternalmetadatum.Table: arinternalmetadatum.ValidColumn,
 		schemamigration.Table:     schemamigration.ValidColumn,
+		todo.Table:                todo.ValidColumn,
+		todostatus.Table:          todostatus.ValidColumn,
 		user.Table:                user.ValidColumn,
 	}
 	check, ok := checks[table]

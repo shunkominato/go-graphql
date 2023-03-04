@@ -12,5 +12,11 @@ type ArInternalMetadatum func(*sql.Selector)
 // SchemaMigration is the predicate function for schemamigration builders.
 type SchemaMigration func(*sql.Selector)
 
+// Todo is the predicate function for todo builders.
+type Todo func(*sql.Selector)
+
+// TodoStatus is the predicate function for todostatus builders.
+type TodoStatus func(*sql.Selector)
+
 // User is the predicate function for user builders.
 type User func(*sql.Selector)

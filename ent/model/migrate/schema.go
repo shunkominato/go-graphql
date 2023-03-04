@@ -31,6 +31,48 @@ var (
 		Columns:    SchemaMigrationsColumns,
 		PrimaryKey: []*schema.Column{SchemaMigrationsColumns[0]},
 	}
+	// TodosColumns holds the columns for the "todos" table.
+	TodosColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeInt, Increment: true, SchemaType: map[string]string{"postgres": "bigserial"}},
+		{Name: "todo", Type: field.TypeString},
+		{Name: "created_at", Type: field.TypeTime},
+		{Name: "updated_at", Type: field.TypeTime},
+		{Name: "todo_statuses_id", Type: field.TypeInt, Nullable: true, SchemaType: map[string]string{"postgres": "bigserial"}},
+		{Name: "user_id", Type: field.TypeInt, Nullable: true, SchemaType: map[string]string{"postgres": "bigserial"}},
+	}
+	// TodosTable holds the schema information for the "todos" table.
+	TodosTable = &schema.Table{
+		Name:       "todos",
+		Columns:    TodosColumns,
+		PrimaryKey: []*schema.Column{TodosColumns[0]},
+		ForeignKeys: []*schema.ForeignKey{
+			{
+				Symbol:     "todos_todo_status_todos",
+				Columns:    []*schema.Column{TodosColumns[4]},
+				RefColumns: []*schema.Column{TodoStatusColumns[0]},
+				OnDelete:   schema.SetNull,
+			},
+			{
+				Symbol:     "todos_users_todos",
+				Columns:    []*schema.Column{TodosColumns[5]},
+				RefColumns: []*schema.Column{UsersColumns[0]},
+				OnDelete:   schema.SetNull,
+			},
+		},
+	}
+	// TodoStatusColumns holds the columns for the "todo_status" table.
+	TodoStatusColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeInt, Increment: true, SchemaType: map[string]string{"postgres": "bigserial"}},
+		{Name: "status", Type: field.TypeString},
+		{Name: "created_at", Type: field.TypeTime},
+		{Name: "updated_at", Type: field.TypeTime},
+	}
+	// TodoStatusTable holds the schema information for the "todo_status" table.
+	TodoStatusTable = &schema.Table{
+		Name:       "todo_status",
+		Columns:    TodoStatusColumns,
+		PrimaryKey: []*schema.Column{TodoStatusColumns[0]},
+	}
 	// UsersColumns holds the columns for the "users" table.
 	UsersColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt, Increment: true, SchemaType: map[string]string{"postgres": "bigserial"}},
@@ -63,9 +105,13 @@ var (
 	Tables = []*schema.Table{
 		ArInternalMetadataTable,
 		SchemaMigrationsTable,
+		TodosTable,
+		TodoStatusTable,
 		UsersTable,
 	}
 )
 
 func init() {
+	TodosTable.ForeignKeys[0].RefTable = TodoStatusTable
+	TodosTable.ForeignKeys[1].RefTable = UsersTable
 }
