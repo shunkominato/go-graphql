@@ -9,15 +9,8 @@ import (
 	"story.com/story/app/ent"
 )
 
-func main() {
-	// opts := []ent.Option{
-	// 	ent.("./model"),  // 出力先を./model配下に指定
-	// 	ent.Package("model"),   // パッケージ名をmodelに指定
-	// 	ent.Header(schema.Header), // ヘッダーを指定
-	// }
-	// if err := entc.Generate("./schema", opts...); err != nil {
-	// 	log.Fatalf("running ent codegen: %v", err)
-	// }
+func main_() {
+
 	client, err := ent.Open("postgres", fmt.Sprintf("host=%s port=%s user=%s dbname=%s password=%s sslmode=disable",
 		"rails_api-db-1", "5432", "postgres", "rails_sample", "postgres"))
 
