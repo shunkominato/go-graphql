@@ -18,6 +18,6 @@ ENV CGO_ENABLED=1 \
 COPY . $APP_ROOT
 
 # Air: hot reload
-# RUN go get github.com/cosmtrek/air@latest
+RUN go install github.com/cosmtrek/air@latest
 
 EXPOSE 8080
