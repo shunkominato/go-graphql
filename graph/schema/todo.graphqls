@@ -1,0 +1,35 @@
+type Todo implements Node {
+  id: ID!
+  todo: String!
+  todoStatus: TodoStatus!
+  user: User!
+}
+
+type TodoPagination implements Pagination {
+  pageInfo: PaginationInfo!
+  nodes: [Todo!]!
+}
+
+type Query {
+  todo(id: Int): Todo
+  todoPagination(limit: Int!, offset: Int): TodoPagination!
+}
+
+input CreateTodoInput {
+  todo: String!
+  todoStatusId: Int!
+  userId: Int!
+}
+
+input UpdateTodoInput {
+  id: Int!
+  todo: String!
+  todoStatusId: Int!
+  userId: Int!
+}
+
+type Mutation {
+  createTodo(input: CreateTodoInput!): Todo!
+  updateTodo(input: UpdateTodoInput!): Todo!
+  deleteTodo(id: Int!): Boolean!
+}
