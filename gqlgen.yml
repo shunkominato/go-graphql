@@ -1,10 +1,13 @@
 # Where are all the schema files located? globs are supported eg  src/**/*.graphqls
 schema:
-  - graph/**/*.graphqls
-
+  - internal/infrastructure/server/graph/**/*.graphqls
+# loader:
+#   custom:
+#     - regex: "graph/**/*.graphqls"
+#       filename: '{base}/resolver/{name|removeSuffix("Query")|removeSuffix("Mutation")}/{name}.go'
 # Where should the generated server code go?
 exec:
-  filename: graph/generated.go
+  filename: internal/infrastructure/server/graph/generated.go
   package: graph
 
 # Uncomment to enable federation
@@ -14,14 +17,15 @@ exec:
 
 # Where should any generated models go?
 model:
-  filename: graph/model/models_gen.go
+  filename: internal/infrastructure/server/graph/model/models_gen.go
   package: model
 
 # Where should the resolver implementations go?
 resolver:
   layout: follow-schema
-  dir: graph
+  dir: internal/infrastructure/server/graph/resolver
   package: graph
+  filename_template: "/{name}.go"
 
 # Optional: turn on use ` + "`" + `gqlgen:"fieldName"` + "`" + ` tags in your models
 # struct_tag: json
@@ -61,9 +65,7 @@ models:
       - github.com/99designs/gqlgen/graphql.Int
       - github.com/99designs/gqlgen/graphql.Int64
       - github.com/99designs/gqlgen/graphql.Int32
-  Todo:
+  User:
     fields:
-      user:
-        resolver: true
-      todoStasus:
+      todo:
         resolver: true

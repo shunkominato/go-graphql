@@ -1,4 +1,0 @@
-type TodoStatus {
-  id: ID!
-  status: String!
-}

@@ -19,6 +19,10 @@ type CreateTodoInput struct {
 	UserID       int    `json:"userId"`
 }
 
+type CreateTodoStatusInput struct {
+	TodoStatus string `json:"todoStatus"`
+}
+
 type PaginationInfo struct {
 	Page             int  `json:"page"`
 	PaginationLength int  `json:"paginationLength"`
@@ -61,6 +65,9 @@ type TodoStatus struct {
 	Status string `json:"status"`
 }
 
+func (TodoStatus) IsNode()            {}
+func (this TodoStatus) GetID() string { return this.ID }
+
 type UpdateTodoInput struct {
 	ID           int    `json:"id"`
 	Todo         string `json:"todo"`
@@ -68,7 +75,13 @@ type UpdateTodoInput struct {
 	UserID       int    `json:"userId"`
 }
 
+type UpdateTodoStatusInput struct {
+	ID         int    `json:"id"`
+	TodoStatus string `json:"todoStatus"`
+}
+
 type User struct {
-	ID   string `json:"id"`
-	Name string `json:"name"`
+	ID   string  `json:"id"`
+	Name string  `json:"name"`
+	Todo []*Todo `json:"todo"`
 }

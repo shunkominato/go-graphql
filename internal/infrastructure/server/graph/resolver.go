@@ -1,7 +1,7 @@
 package graph
 
 //go:generate go run github.com/99designs/gqlgen generate
-import "story.com/story/app/graph/model"
+import "story.com/story/app/internal/infrastructure/server/graph/model"
 
 // This file will not be regenerated automatically.
 //
@@ -9,4 +9,5 @@ import "story.com/story/app/graph/model"
 
 type Resolver struct{
 	todos []*model.Todo
+	todoStatus []*model.TodoStatus
 }

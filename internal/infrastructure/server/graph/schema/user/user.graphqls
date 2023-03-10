@@ -5,4 +5,5 @@
 type User {
   id: ID!
   name: String!
+  todo: [Todo]
 }

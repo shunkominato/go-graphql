@@ -7,7 +7,7 @@ import (
 
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/playground"
-	"story.com/story/app/graph"
+	"story.com/story/app/internal/infrastructure/server/graph"
 )
 
 const defaultPort = "8080"
